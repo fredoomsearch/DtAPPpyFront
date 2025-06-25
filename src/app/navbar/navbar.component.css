@@ -1,0 +1,28 @@
+/* Neon Title Effect */
+.neon-title {
+  text-shadow: 0 0 6px #ffffff, 0 0 12px #ffffff, 0 0 20px #ffffff;
+}
+
+/* Neon Paragraphs and Text */
+.neon-text {
+  text-shadow: 0 0 3px rgb(255, 255, 255);
+}
+
+/* Neon Buttons */
+.neon-button {
+  padding: 0.625rem 1.25rem;
+  background-color: #424242;
+  color: #3700ff;
+  border: 1px solid #00ffff;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  text-shadow: 0 0 6px #6200ff;
+  box-shadow: 0 0 10px #00ffff33, 0 0 20px #00ffff22;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.neon-button:hover {
+  background-color: #003366;
+  box-shadow: 0 0 15px #7700ff, 0 0 25px #8c00ff;
+}

@@ -1,0 +1,203 @@
+<div class="container">
+  <button (click)="showDonationForm = !showDonationForm" class="toggle-button">
+    {{ showDonationForm ? 'Hide Donation Form' : 'Show Donation Form' }}
+  </button>
+
+  <div *ngIf="showDonationForm" class="donation-form">
+    <h3>Make a Donation to Receive a Prediction</h3>
+    <p>Your support helps us keep the project going. Make a donation in Colombian Pesos (COP) and receive a CSV file with cryptocurrency price predictions in your email. Donations start at 5,000 COP or more. Help someone and make it interesting and fun. Maybe you'll get lucky!</p>
+
+    <div>
+      <label for="buyerEmail">Your Email:</label>
+      <input
+        type="email"
+        id="buyerEmail"
+        name="buyerEmail"
+        [(ngModel)]="buyerEmail"
+        placeholder="Your email address"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="amount">Donation Amount (COP):</label>
+      <input
+        type="number"
+        id="amount"
+        name="donationAmountCOP"
+        [(ngModel)]="donationAmountCOP"
+        [value]="5000"
+        min="1000"
+        required
+      />
+    </div>
+
+    <button (click)="redirectToPayU()" class="payu-button" [disabled]="!buyerEmail || !donationAmountCOP">Donate with PayU</button>
+  </div>
+</div>
+<section class="accuracy-info">
+  
+<h2 class="text-2xl font-bold text-white drop-shadow-neon mb-4">
+  Model Prediction Accuracy Estimates
+</h2>
+
+<p class="text-white mb-4">
+  For <strong class="text-neon">future price predictions</strong> (even 1 hour ahead), these models
+  typically have a <strong class="text-neon">real probability of being reasonably accurate
+  in about 60–70% of cases</strong>. For current price explanation (not future),
+  the fit can be up to <strong class="text-neon">75–85% R²</strong>.
+</p>
+
+<ul class="list-disc pl-5 text-white mb-4">
+  <li><strong class="text-neon">Current price (correlation):</strong> up to 85% R²</li>
+  <li><strong class="text-neon">Short-term future (1h ahead):</strong> 60–70% probability</li>
+  <li><strong class="text-neon">Next-day/future:</strong> &lt;60% probability</li>
+</ul>
+
+<blockquote class="border-l-4 border-cyan-400 pl-4 text-neon italic mb-6">
+  “For future price predictions, these models are typically correct in about
+  <strong class="text-neon">60–70%</strong> of cases.”
+</blockquote>
+
+<table class="w-full text-white border border-cyan-400 text-sm text-left shadow-md rounded-lg overflow-hidden">
+  <thead class="bg-cyan-800 text-neon">
+    <tr>
+      <th class="px-4 py-2 border border-cyan-400">Model</th>
+      <th class="px-4 py-2 border border-cyan-400">Same-moment (R²)</th>
+      <th class="px-4 py-2 border border-cyan-400">Short-term (conf.)</th>
+      <th class="px-4 py-2 border border-cyan-400">Next-day/future</th>
+    </tr>
+  </thead>
+  <tbody class="bg-cyan-950">
+    <tr>
+      <td class="px-4 py-2 border border-cyan-400">Linear Regression</td>
+      <td class="px-4 py-2 border border-cyan-400">75–85%</td>
+      <td class="px-4 py-2 border border-cyan-400">60–70%</td>
+      <td class="px-4 py-2 border border-cyan-400">&lt;50–60%</td>
+    </tr>
+    <tr>
+      <td class="px-4 py-2 border border-cyan-400">Random Forest</td>
+      <td class="px-4 py-2 border border-cyan-400">75–85%</td>
+      <td class="px-4 py-2 border border-cyan-400">60–70%</td>
+      <td class="px-4 py-2 border border-cyan-400">&lt;60%</td>
+    </tr>
+    <tr>
+      <td class="px-4 py-2 border border-cyan-400">Deep Learning (TF/Keras)</td>
+      <td class="px-4 py-2 border border-cyan-400">75–85%</td>
+      <td class="px-4 py-2 border border-cyan-400">60–70%</td>
+      <td class="px-4 py-2 border border-cyan-400">&lt;60%</td>
+    </tr>
+  </tbody>
+</table>
+
+  <div class="container">
+  <h1>Generate a csv file in the backend and show u in the graphic the predicted price</h1>
+  <button (click)="generateCsvAndPredict()" class="toggle-button">
+    Generate CSV and Predict Prices <br>
+    (Tf Keras Model(Deep learning))
+  </button>
+
+  <div echarts [options]="chartOption" class="demo-chart"></div>
+
+
+<div class="container">
+  <div class="chart-view-toggle-buttons">
+    <button (click)="loadCurrentCryptoData()"
+            [class.active]="currentView === 'market'"
+            class="view-data-button">
+      View Current Market Data (Actual Prices Of Coins)
+    </button>
+
+    
+    <button (click)="loadPredictedCryptoData()"
+            [class.active]="currentView === 'predictions'"
+            class="view-data-button">
+      View Crypto Predictions
+       (Random Forest Model)
+    </button>
+  </div>
+
+  <div class="container">
+  <button (click)="downloadAndShowPredictionCsv()" class="toggle-button">
+    Download & Show Prediction CSV <br>
+    (Linear Regression)
+  </button>
+
+  <div *ngIf="loadingChart" class="loading">
+    Loading prediction CSV...
+  </div>
+  <div *ngIf="chartError" class="error">
+    {{ chartError }}
+  </div>
+<div echarts [options]="csvChartOption" class="demo-chart" *ngIf="predictionCsvData.length > 0"></div>
+</div>
+
+  <div *ngIf="loadingChart" class="loading">
+    Loading data...
+  </div>
+
+  <div *ngIf="chartError" class="error">
+    {{ chartError }}
+  </div>
+
+  <div *ngIf="!loadingChart && !chartError && (currentCryptoData.length > 0 || cryptoPredictionsData.length > 0)" class="main-content">
+    <div class="chart-container">
+      <div echarts [options]="chartOption" class="demo-chart"></div>
+    </div>
+
+    <div class="data-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th *ngIf="currentView === 'market'">Name</th>
+            <th *ngIf="currentView === 'market'">Current Price (USD)</th>
+            <th *ngIf="currentView === 'market'">Market Cap</th>
+            <th *ngIf="currentView === 'predictions'">Predicted Price (USD)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="currentView === 'market'">
+            <tr *ngFor="let crypto of currentCryptoData">
+              <td>{{ crypto.symbol }}</td>
+              <td>{{ crypto.name }}</td>
+              <td>${{ crypto.current_price | number: '1.2-2' }}</td>
+              <td>${{ crypto.market_cap | number }}</td>
+              <td>
+                <button (click)="showHistoricalData(crypto.symbol)">Show Data</button>
+                <div *ngIf="selectedSymbol === crypto.symbol && selectedHistoricalEntry" class="inline-historical-data">
+                  <p>Feature 1: {{ selectedHistoricalEntry.feature1 | number }} ! PRICE</p>
+                  <p>Target: {{ selectedHistoricalEntry.target | number }} ! TOTAL VOLUME</p>
+                  <p>Symbol: {{ selectedHistoricalEntry.symbol }}</p>
+                </div>
+                <div *ngIf="selectedSymbol === crypto.symbol && !selectedHistoricalEntry" class="inline-historical-data">
+                  <p>No historical data found for {{ crypto.symbol }}</p>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="currentView === 'predictions'">
+            <tr *ngFor="let prediction of cryptoPredictionsData">
+              <td>{{ prediction.symbol }}</td>
+              <td>${{ prediction.predicted_price | number: '1.2-2' }}</td>
+              <td>
+                <button (click)="showHistoricalData(prediction.symbol)">Show Data</button>
+                <div *ngIf="selectedSymbol === prediction.symbol && selectedHistoricalEntry" class="inline-historical-data">
+                  <p>Feature 1: {{ selectedHistoricalEntry.feature1 | number }} ! PRICE</p>
+                  <p>Target: {{ selectedHistoricalEntry.target | number }} ! TOTAL VOLUME</p>
+                  <p>Symbol: {{ selectedHistoricalEntry.symbol }}</p>
+                </div>
+                <div *ngIf="selectedSymbol === prediction.symbol && !selectedHistoricalEntry" class="inline-historical-data">
+                  <p>No historical data found for {{ prediction.symbol }}</p>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+</div>

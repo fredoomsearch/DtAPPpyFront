@@ -1,0 +1,12 @@
+<div class="news-container">
+  <div *ngFor="let topic of topics" class="topic-section">
+    <h2>{{ topic }}</h2>
+    <div class="articles-grid">
+      <div *ngFor="let article of getArticlesByTopic(topic)" class="article-card">
+        <h3>{{ article.title }}</h3>
+        <p>{{ article.description }}</p>
+        <a [href]="article.url" target="_blank">Read More</a>
+      </div>
+    </div>
+  </div>
+</div>

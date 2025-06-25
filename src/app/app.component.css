@@ -1,0 +1,22 @@
+
+/* You might need to adjust other body styles in your global styles.css */
+
+.background-image {
+
+  z-index: -1; /* To place it behind other content if needed */
+  background-size: center;
+  
+  /* Optionally add a background color as a fallback */
+  
+}
+
+/* Style the div containing the GIF as needed */
+
+.neon-text {
+  text-shadow:
+    0 0 5px rgb(132, 0, 255),
+    0 0 10px rgb(98, 0, 255),
+    0 0 20px rgb(0, 47, 255),
+    0 0 40px rgb(89, 0, 255);
+  color: #b2fefe;
+}
