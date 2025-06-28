@@ -1,4 +1,3 @@
-# Use a Node.js image to build the Angular app
 FROM node:18-alpine AS build
 
 WORKDIR /angular-front
@@ -9,8 +8,15 @@ RUN npm install
 COPY ./ ./
 RUN npm run build --prod
 
-FROM nginx:alpine
-COPY --from=build /angular-front/dist/angular-front /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+FROM node:18-alpine
+
+WORKDIR /app
+
+RUN npm install -g http-server
+
+# Copy the actual build output to /app
+COPY --from=build /angular-front/dist/angular-front ./
 
 EXPOSE 80
+
+CMD ["http-server", "-p", "80"]
