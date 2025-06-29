@@ -15,7 +15,7 @@ WORKDIR /app
 RUN npm install -g http-server
 
 # Copy the actual build output to /app
-COPY --from=build /angular-front/dist/angular-front ./
+COPY --from=build /angular-front/dist/angular-front/browser ./
 
 EXPOSE 80
 
