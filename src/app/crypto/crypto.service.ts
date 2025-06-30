@@ -26,7 +26,7 @@ export interface PredictionCsvRow {
 })
 export class CryptoService {
   // 🔗 Base API URL for Render backend
-  private baseApiUrl = 'https://dtapppy.onrender.com/api/crypto';
+  private baseApiUrl = 'https://dtapppy.onrender.com/crypto';
 
   constructor(private http: HttpClient) {}
 
