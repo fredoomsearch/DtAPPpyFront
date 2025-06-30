@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
 import * as Papa from 'papaparse';
 
-// Define interfaces
 export interface CryptoMarketData {
   name: string;
   current_price: number;
@@ -16,39 +15,42 @@ export interface CryptoPredictionData {
   predicted_price: number;
 }
 
-// Define the structure of a row in the prediction CSV
 export interface PredictionCsvRow {
   symbol: string;
   predicted_price: number;
-  [key: string]: any; // Add this if there may be additional columns
+  [key: string]: any;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class CryptoService {
-  private baseApiUrl = 'http://localhost:8000/api/crypto';
+  // 🔗 Base API URL for Render backend
+  private baseApiUrl = 'https://dtapppy.onrender.com/api/crypto';
 
   constructor(private http: HttpClient) {}
 
-  // Market Data Methods
+  // 📈 Get current market data
   getCryptoMarketData(): Observable<CryptoMarketData[]> {
     return this.http.get<CryptoMarketData[]>(`${this.baseApiUrl}/crypto-data`);
   }
-  
+
+  // 🔮 Get predicted crypto prices
   getPredictedCryptoData(): Observable<CryptoPredictionData[]> {
     return this.http.get<CryptoPredictionData[]>(`${this.baseApiUrl}/predictions-data`);
   }
 
-  // CSV and Prediction Methods
+  // 📄 Trigger generation of a CSV file on the backend
   generateCsv(): Observable<any> {
     return this.http.get(`${this.baseApiUrl}/csv/`);
   }
 
+  // 🧠 Get ML predictions (DL-based)
   getPredictions(): Observable<CryptoPredictionData[]> {
     return this.http.get<CryptoPredictionData[]>(`${this.baseApiUrl}/predictions_dl/`);
   }
 
+  // 🚀 Trigger prediction generation
   predictPrices(): Observable<any> {
     return this.http.get(`${this.baseApiUrl}/predict_dl/`).pipe(
       catchError(error => {
@@ -58,25 +60,24 @@ export class CryptoService {
     );
   }
 
-downloadPredictionCsv(): Observable<PredictionCsvRow[]> {
-  return this.http.get('http://localhost:8000/csv/', { responseType: 'blob' }).pipe(
-    switchMap(blob => new Observable<PredictionCsvRow[]>(observer => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        Papa.parse<PredictionCsvRow>(reader.result as string, {
-          header: true,
-          skipEmptyLines: true,
-          complete: (result: Papa.ParseResult<PredictionCsvRow>) => {
-            observer.next(result.data as PredictionCsvRow[]);
-            observer.complete();
-          },
-          error: (error: Error, file: any) => observer.error(error)
-        });
-      };
-      reader.readAsText(blob);
-    }))
-  );
-}
-
-
+  // ⬇️ Download and parse CSV predictions
+  downloadPredictionCsv(): Observable<PredictionCsvRow[]> {
+    return this.http.get('https://dtapppy.onrender.com/csv/', { responseType: 'blob' }).pipe(
+      switchMap(blob => new Observable<PredictionCsvRow[]>(observer => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          Papa.parse<PredictionCsvRow>(reader.result as string, {
+            header: true,
+            skipEmptyLines: true,
+            complete: (result) => {
+              observer.next(result.data);
+              observer.complete();
+            },
+            error: (error) => observer.error(error),
+          });
+        };
+        reader.readAsText(blob);
+      }))
+    );
+  }
 }
