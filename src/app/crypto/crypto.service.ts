@@ -61,24 +61,25 @@ export class CryptoService {
   }
 
   // ⬇️ Download and parse CSV predictions
-downloadPredictionCsv(): Observable<PredictionCsvRow[]> {
-  return this.http.get('https://dtapppy.onrender.com/csv/', { responseType: 'blob' }).pipe(
-    switchMap(blob => new Observable<PredictionCsvRow[]>(observer => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        Papa.parse<PredictionCsvRow>(reader.result as string, {
-          header: true,
-          skipEmptyLines: true,
-          complete: (result: Papa.ParseResult<PredictionCsvRow>) => {
-            observer.next(result.data as PredictionCsvRow[]);
-            observer.complete();
-          },
-          error: (error: any) => observer.error(error) // ✅ FIXED HERE
-        });
-      };
-      reader.readAsText(blob);
-    }))
-  );
-}
+  // ⬇️ Download and parse CSV predictions
+  downloadPredictionCsv(): Observable<PredictionCsvRow[]> {
+    return this.http.get('https://dtapppy.onrender.com/csv/', { responseType: 'blob' }).pipe(
+      switchMap(blob => new Observable<PredictionCsvRow[]>(observer => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          Papa.parse<PredictionCsvRow>(reader.result as string, {
+            header: true,
+            skipEmptyLines: true,
+            complete: (result: Papa.ParseResult<PredictionCsvRow>) => {
+              observer.next(result.data as PredictionCsvRow[]);
+              observer.complete();
+            },
+            error: (error: any) => observer.error(error) // ✅ already fixed
+          });
+        };
+        reader.readAsText(blob);
+      }))
+    );
+  }
 
 }
