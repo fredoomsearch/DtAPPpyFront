@@ -82,14 +82,5 @@ export class CryptoService {
     );
   }
 
-router = APIRouter()
-logger = logging.getLogger(__name__)
 
-@router.get("/csv/", summary="Download the prediction CSV")
-def download_csv(db: Session = Depends(get_db)):
-    try:
-        return FileResponse("predictions.csv", media_type="text/csv", filename="predictions.csv")
-    except Exception as e:
-        logger.error("Could not serve CSV: %s", e)
-        raise HTTPException(500, "CSV not available")
 }
