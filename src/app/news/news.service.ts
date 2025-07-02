@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class NewsService {
-  private apiUrl = environment.apiUrl + '/news/';
+  private apiUrl = environment.apiUrl + 'https://dtappbackend.onrender.com';
 
   constructor(private http: HttpClient) {}
 
