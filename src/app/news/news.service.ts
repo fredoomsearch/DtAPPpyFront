@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environments } from '../../environments/environment';
 
-
-// news.service.ts
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
-  private apiUrl = environments.apiUrl + '/news';
+  // Directly use the Render backend API URL for news
+  private apiUrl = 'https://dtapppy.onrender.com/news';
 
   constructor(private http: HttpClient) {}
 
-  getNews(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  getNews(endpoint: string = this.apiUrl): Observable<any> {
+    return this.http.get<any>(endpoint);
   }
-}
