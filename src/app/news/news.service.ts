@@ -3,11 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
+// news.service.ts
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
-  private apiUrl = environment.apiUrl + 'https://dtappbackend.onrender.com';
+  private apiUrl = environment.apiUrl + '/news/';
 
   constructor(private http: HttpClient) {}
 
