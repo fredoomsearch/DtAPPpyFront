@@ -2,83 +2,55 @@
 
 <!-- Background with Overlay -->
 <div class="background-image" [style.backgroundImage]="'url(assets/images/2.png)'">
-  <!-- Optional Decorative GIF -->
+  <!-- Decorative Image/GIF -->
   <div class="flex justify-center mt-4">
-    <img src="assets/images/200.gif" alt="Animated Insight Graphic">
+    <img src="assets/images/200.gif" alt="Animated Graphic" />
   </div>
 
-  <!-- Info Card -->
-  <div class="p-6 bg-black rounded-2xl shadow-lg mx-4 my-6 max-w-3xl mx-auto">
-    <p class="text-lg text-white leading-relaxed neon-text">
-
-      Here's a little extra insight:  
-      When you click <span class="text-cyan-400 font-semibold">‘Show Data’</span> for a cryptocurrency, you'll receive a free prediction for its potential price and trading volume.
-
-      <br><br>
-
-      This forecast includes broader analysis, combining perspectives from top businesses in the EU and Wall Street reports. It aims to offer a deeper look beyond the immediate market numbers.  
-      While crypto markets are naturally volatile, these predictions aim to offer a better-than-even chance of being accurate.
-
-      <br><br>
-
-      <span class="text-pink-400 font-bold">Curious to see the potential trends?</span>  
-      Give <span class="text-cyan-400 font-semibold">‘Show Data’</span> a click!
-
-      <br><br>
-
-      <span class="text-green-400 italic">
-        P.S. If you appreciate this feature, you can support this project!  
-        Just enter your email, select your preferred crypto, and donate what you feel comfortable with.
-
-        <br><br>
-
-        <strong class="text-red-400">
-          ⚠️ The donation form is currently disabled because PayU declined the payment integration request.
-        </strong>
-
-        <br><br>
-
-        If you'd like to help, feel free to contact me at  
-        <span class="text-cyan-300 font-medium">jeg01&#64;outlook.com.ar</span> 😊
-        
-        <br><br>
-
-        🔧 <strong>Use the backend to generate your own predictions:</strong>
-
-        <ul class="list-disc ml-6 mt-2">
-          <li>
-            🧠 <strong>Update current data:</strong>  
-            <a href="https://dtapppy.onrender.com/crypto/csv/" class="text-blue-400 underline" target="_blank">
-              https://dtapppy.onrender.com/crypto/csv/
-            </a>
-          </li>
-          <li>
-            🧠 <strong>Random Forest Model:</strong>  
-            <a href="https://dtapppy.onrender.com/crypto/process_and_predict/" class="text-blue-400 underline" target="_blank">
-              https://dtapppy.onrender.com/crypto/process_and_predict/
-            </a>
-          </li>
-          <li>
-            📈 <strong>Linear Regression Model</strong> (this may take 20+ minutes):  
-            <a href="https://dtapppy.onrender.com/predict_price" class="text-blue-400 underline" target="_blank">
-              https://dtapppy.onrender.com/predict_price
-            </a>
-          </li>
-        </ul>
-
-        <br>
-
-        After processing, use the frontend to view the updated predictions and insights.
-      </span>
+  <!-- Informational Card -->
+  <div class="p-6 bg-black rounded-2xl shadow-lg mx-4 my-6 max-w-3xl mx-auto text-white text-lg leading-relaxed neon-text">
+    <p>
+      Here's a little extra insight: When you click
+      <span class="text-cyan-400 font-semibold">‘Show Data’</span> for a cryptocurrency, you'll receive a free prediction for its potential price and trading volume.
     </p>
+
+    <p>
+      This forecast includes broader analysis from leading businesses in the EU and Wall Street, offering deeper insights beyond basic numbers.
+      While crypto markets are volatile, these predictions strive to be more accurate than a coin toss.
+    </p>
+
+    <p>
+      <span class="text-pink-400 font-bold">Curious to see the trends?</span>
+      Click <span class="text-cyan-400 font-semibold">‘Show Data’</span> and explore!
+    </p>
+
+    <p class="text-green-400 italic">
+      P.S. Like this tool? You can support it!  
+      Although the donation form is disabled (due to PayU request rejection), you can contact me at  
+      <strong class="text-cyan-300">jeg01&#64;outlook.com.ar</strong> 😊
+    </p>
+
+    <p>
+      🔧 <strong>Use the backend to generate predictions:</strong>
+    </p>
+    <ul class="list-disc ml-6 text-blue-300">
+      <li>
+        🧠 <strong>Update current data:</strong>
+        <a href="https://dtapppy.onrender.com/crypto/csv/" target="_blank">https://dtapppy.onrender.com/crypto/csv/</a>
+      </li>
+      <li>
+        🧠 <strong>Random Forest Model:</strong>
+        <a href="https://dtapppy.onrender.com/crypto/process_and_predict/" target="_blank">https://dtapppy.onrender.com/crypto/process_and_predict/</a>
+      </li>
+      <li>
+        📈 <strong>Linear Regression Model</strong> (may take 20+ minutes):
+        <a href="https://dtapppy.onrender.com/predict_price" target="_blank">https://dtapppy.onrender.com/predict_price</a>
+      </li>
+    </ul>
+
+    <p>Once processed, return to the frontend to view updated predictions and insights.</p>
   </div>
 </div>
 
 <router-outlet></router-outlet>
 
-
-     
-  </p>
-</div>
-</div>
-<router-outlet></router-outlet>
